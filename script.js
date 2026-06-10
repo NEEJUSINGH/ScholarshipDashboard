@@ -7,46 +7,15 @@ async function loadCSV() {
 
   const response = await fetch(SHEET_URL + "&v=" + Date.now());
   const text = await response.text();
-  scholarships = parseCSV(text);
+
+  const parsed = Papa.parse(text, {
+    header: true,
+    skipEmptyLines: true
+  });
+
+  scholarships = parsed.data;
   filteredScholarships = scholarships;
   renderScholarships();
-}
-
-function parseCSV(text) {
-  const rows = [];
-  const lines = text.split(/\r?\n/).filter(line => line.trim() !== "");
-  const headers = splitCSVLine(lines[0]);
-
-  for (let i = 1; i < lines.length; i++) {
-    const values = splitCSVLine(lines[i]);
-    const row = {};
-    headers.forEach((header, index) => {
-      row[header.trim()] = values[index] ? values[index].trim() : "";
-    });
-    rows.push(row);
-  }
-
-  return rows;
-}
-
-function splitCSVLine(line) {
-  const result = [];
-  let current = "";
-  let inQuotes = false;
-
-  for (let char of line) {
-    if (char === '"') {
-      inQuotes = !inQuotes;
-    } else if (char === "," && !inQuotes) {
-      result.push(current);
-      current = "";
-    } else {
-      current += char;
-    }
-  }
-
-  result.push(current);
-  return result;
 }
 
 function applyFilters() {
@@ -64,7 +33,7 @@ function applyFilters() {
     `.toLowerCase();
 
     const matchesSearch = !search || searchableText.includes(search);
-    const matchesStatus = !status || item.Status === status;
+    const matchesStatus = !status || (item.Status || "").includes(status);
 
     let matchesDate = true;
     if (fromDate || toDate) {
