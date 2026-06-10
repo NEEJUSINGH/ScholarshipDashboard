@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scholarship Finder</title>
+  <link rel="stylesheet" href="style.css?v=1" />
+</head>
+<body>
+  <header>
+    <h1>Scholarship Finder</h1>
+    <p>Search and filter external scholarship opportunities.</p>
+  </header>
+
+  <section class="filters">
+    <input id="searchInput" type="text" placeholder="Search by keyword, provider, tag..." />
+
+    <select id="statusFilter">
+      <option value="">All Statuses</option>
+      <option value="Open">Open</option>
+      <option value="Closed">Closed</option>
+      <option value="Rolling">Rolling</option>
+      <option value="Waiting for dates">Waiting for dates</option>
+    </select>
+
+    <input id="fromDate" type="date" />
+    <input id="toDate" type="date" />
+
+    <button id="clearBtn">Clear Filters</button>
+    <button id="downloadBtn">Download Results</button>
+  </section>
+
+  <p id="resultCount"></p>
+
+  <main id="scholarshipList"></main>
+
+  <script src="script.js?v=1"></script>
+</body>
+</html>
