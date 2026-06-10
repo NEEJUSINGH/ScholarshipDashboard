@@ -2,7 +2,10 @@ let scholarships = [];
 let filteredScholarships = [];
 
 async function loadCSV() {
-  const response = await fetch("scholarships.csv?v=" + Date.now());
+  const SHEET_URL =
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vRxek53OQeO0xbFzldCCahGQQZMEdQtZtnB0hbrAmhB791iTNrGn_XTv7vEgsBdsa9ros7Pm6fSv8Sh/pub?output=csv";
+
+  const response = await fetch(SHEET_URL + "&v=" + Date.now());
   const text = await response.text();
   scholarships = parseCSV(text);
   filteredScholarships = scholarships;
